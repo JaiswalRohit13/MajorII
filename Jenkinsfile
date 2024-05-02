@@ -57,7 +57,7 @@ pipeline {
             sh 'python3 -m venv myenv'
             
             // Activate virtual environment
-            sh 'source myenv/bin/activate'
+            sh '. myenv/bin/activate'
             
             // Install dependencies including flask_sqlalchemy
             sh 'myenv/bin/python -m pip install pytest flask_sqlalchemy'
