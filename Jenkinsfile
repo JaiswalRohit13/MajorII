@@ -50,11 +50,49 @@ pipeline {
             }
         }
        }
-        stage('OWASP FS SCAN') {
+        stage('Image build') {
             steps {
-                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'dp-check'
-                dependencyCheckPublisher pattern: '/dependency-check-report.xml'
+                script{
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh '''
+                        docker build -t emp_portal-app .
+                        '''
+                    }
             }
-        }
+        } 
+    }
+     stage('Docker tag') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh '''
+                        docker tag emp_portal-app jaiswalrohit13/emp_portal-app:latest
+                        '''
+                    }
+            }
+        } 
+    } 
+      stage('Docker run') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh '''
+                        docker run -d -p 5000:5000 emp_portal-app:latest
+                        '''
+                    }
+            }
+        } 
+    }  
+    stage('Docker push') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh '''
+                        docker push jaiswalrohit13/emp_portal-app:latest
+                        '''
+                    }
+            }
+        } 
+    }
     }
 }
