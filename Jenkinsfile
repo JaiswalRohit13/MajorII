@@ -50,6 +50,24 @@ pipeline {
             }
         }
        }
+        stage('Test with pytest') {
+            steps {
+                script {
+                    // Create virtual environment
+                    sh 'python3 -m venv myenv'
+                    
+                    // Activate virtual environment
+                    sh 'source myenv/bin/activate'
+                    
+                    // Install pytest
+                    sh 'pip install pytest'
+                    
+                    // Run pytest
+                    sh 'pytest'
+                }
+            }
+        }  
+
         stage('Image build') {
             steps {
                 script{
