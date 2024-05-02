@@ -10,5 +10,14 @@ pipeline {
                git branch: 'main', url: 'https://github.com/JaiswalRohit13/MajorII.git'
             }
         }
+        stage('Installing packages') {
+            steps {
+                script {
+                    // Install required python packages
+                    sh 'pip install -r requirements.txt'
+                    
+                }
+            }
+        }
     }
 }
