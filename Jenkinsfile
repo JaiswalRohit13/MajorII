@@ -13,7 +13,6 @@ pipeline {
         stage('Installing packages') {
             steps {
                 script {
-                    // Install required python packages
                     sh 'pip install -r requirements.txt'
                     
                 }
