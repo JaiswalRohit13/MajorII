@@ -51,19 +51,22 @@ pipeline {
         }
        }
         stage('Setup and Test') {
-            steps {
-                script {
-                    // Create virtual environment
-                    sh 'python3 -m venv myenv'
-                    
-                    // Activate virtual environment and install pytest
-                    sh 'myenv/bin/python -m pip install pytest'
-                    
-                    // Run pytest
-                    sh 'myenv/bin/pytest'
-                }
-            }
+    steps {
+        script {
+            // Create virtual environment
+            sh 'python3 -m venv myenv'
+            
+            // Activate virtual environment
+            sh 'source myenv/bin/activate'
+            
+            // Install dependencies including flask_sqlalchemy
+            sh 'myenv/bin/python -m pip install pytest flask_sqlalchemy'
+            
+            // Run pytest
+            sh 'myenv/bin/pytest'
         }
+    }
+}
         stage('Image build') {
             steps {
                 script{
