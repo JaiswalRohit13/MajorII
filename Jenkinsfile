@@ -21,5 +21,15 @@ pipeline {
                 }
             }
         }
+        stage('Clean Up') {
+            steps {
+                script {
+                    
+                    // Stop and remove all containers except for SonarQube, Python, and the specified container ID
+                    sh 'docker ps -a --format "{{.ID}} {{.Names}}" | grep -v "08edb5bed32e\\|sonarqube:lts-community\\|python" | awk \'{print $1}\' | xargs -r docker stop'
+                    sh 'docker ps -a --format "{{.ID}} {{.Names}}" | grep -v "08edb5bed32e\\|sonarqube:lts-community\\|python"
+                }
+            }
+        }
     }
 }
