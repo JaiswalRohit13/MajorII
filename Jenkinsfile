@@ -36,5 +36,13 @@ pipeline {
                 }
             }
         }
+        stage("Sonarqube Analysis "){
+            steps{
+                withSonarQubeEnv('sonar-server') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=emp-portal \
+                    -Dsonar.projectKey=emp-portal '''
+                }
+            }
+        }
     }
 }
