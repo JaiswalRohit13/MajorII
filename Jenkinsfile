@@ -50,7 +50,7 @@ pipeline {
             }
         }
        }
-        stage('Setup and Test') {
+        stage('Testing with Pytest') {
     steps {
         script {
             // Create virtual environment
