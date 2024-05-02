@@ -13,9 +13,11 @@ pipeline {
         stage('Installing packages') {
             steps {
                 script {
-                    sh 'python3 -m venv venv'
-                    sh '. venv/bin/activate'
-                    sh 'pip install -r requirements.txt'               
+                    sh '''
+                        python3 -m venv venv
+                        source venv/bin/activate
+                        pip install -r requirements.txt
+                    '''
                 }
             }
         }
