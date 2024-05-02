@@ -51,10 +51,13 @@ pipeline {
         }
        }
         stage('TRIVY FS SCAN') {
-            steps {
-                sh "trivy fs . > trivyfs.txt"
-            }
+    steps {
+        // Assuming you want to scan the directory named 'target_directory'
+        dir('target_directory') {
+            sh "trivy fs . > trivyfs.txt"
         }
+    }
+}
         stage('OWASP FS SCAN') {
             steps {
                 dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'dp-check'
